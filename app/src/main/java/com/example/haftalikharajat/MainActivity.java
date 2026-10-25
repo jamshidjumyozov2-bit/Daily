@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
         return total;
     }
 
-    public void addExpense(String name, double amount, String category) {
-        expenseList.add(0, new Expense(name, amount, category, System.currentTimeMillis()));
+    public void addExpense(String name, double amount, String category, long timestamp) {
+        expenseList.add(0, new Expense(name, amount, category, timestamp));
         saveData();
         refreshAll();
     }

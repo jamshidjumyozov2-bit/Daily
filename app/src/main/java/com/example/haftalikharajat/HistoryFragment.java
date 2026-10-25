@@ -36,7 +36,7 @@ public class HistoryFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                // 0: Kunlik, 1: Haftalik, 2: Oylik, 3: Yillik
+                if (position == 1) return new WeeklyFragment();
                 return PeriodFragment.newInstance(position);
             }
 
@@ -75,6 +75,8 @@ public class HistoryFragment extends Fragment {
             Fragment currentFragment = getChildFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
             if (currentFragment instanceof PeriodFragment) {
                 ((PeriodFragment) currentFragment).updateData();
+            } else if (currentFragment instanceof WeeklyFragment) {
+                ((WeeklyFragment) currentFragment).updateData();
             }
         }
     }

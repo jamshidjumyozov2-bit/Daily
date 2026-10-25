@@ -16,4 +16,8 @@ public class Expense {
         this.category = category;
         this.timestamp = timestamp;
     }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }

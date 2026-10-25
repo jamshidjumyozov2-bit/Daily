@@ -58,7 +58,12 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.ViewHolder> {
         }
 
         holder.itemView.setOnLongClickListener(v -> {
-            listener.onDelete(debt);
+            new android.app.AlertDialog.Builder(v.getContext())
+                    .setTitle("O'chirish")
+                    .setMessage("Ushbu qarzni o'chirib tashlamoqchimisiz?")
+                    .setPositiveButton("Ha", (dialog, which) -> listener.onDelete(debt))
+                    .setNegativeButton("Yo'q", null)
+                    .show();
             return true;
         });
     }

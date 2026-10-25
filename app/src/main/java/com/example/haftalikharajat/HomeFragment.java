@@ -20,9 +20,9 @@ import java.util.Locale;
 public class HomeFragment extends Fragment {
 
     private TextView tvTotalBalance;
-    private EditText etExpName, etExpAmount;
-    private Spinner spExpCategory;
+    private EditText etExpName, etExpAmount, etExpDate;
     private Button btnSaveExp;
+    private long selectedTimestamp = 0;
 
     @Nullable
     @Override
@@ -31,10 +31,12 @@ public class HomeFragment extends Fragment {
         tvTotalBalance = view.findViewById(R.id.tvTotalBalance);
         etExpName = view.findViewById(R.id.etExpName);
         etExpAmount = view.findViewById(R.id.etExpAmount);
-        spExpCategory = view.findViewById(R.id.spExpCategory);
+        etExpDate = view.findViewById(R.id.etExpDate);
         btnSaveExp = view.findViewById(R.id.btnSaveExp);
 
         updateUI();
+
+        etExpDate.setOnClickListener(v -> showDateTimePicker());
 
         btnSaveExp.setOnClickListener(v -> {
             String name = etExpName.getText().toString().trim();
@@ -42,16 +44,35 @@ public class HomeFragment extends Fragment {
             if (name.isEmpty() || amountStr.isEmpty()) return;
 
             double amount = Double.parseDouble(amountStr);
-            String category = spExpCategory.getSelectedItem().toString();
-            ((MainActivity) getActivity()).addExpense(name, amount, category);
+            long timestamp = selectedTimestamp > 0 ? selectedTimestamp : System.currentTimeMillis();
+            ((MainActivity) getActivity()).addExpense(name, amount, "Boshqa", timestamp);
             
             etExpName.setText("");
             etExpAmount.setText("");
+            etExpDate.setText("");
+            selectedTimestamp = 0;
             updateUI();
             Toast.makeText(getContext(), "Xarajat saqlandi", Toast.LENGTH_SHORT).show();
         });
 
         return view;
+    }
+
+    private void showDateTimePicker() {
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        new android.app.DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
+            calendar.set(java.util.Calendar.YEAR, year);
+            calendar.set(java.util.Calendar.MONTH, month);
+            calendar.set(java.util.Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            new android.app.TimePickerDialog(getContext(), (view1, hourOfDay, minute) -> {
+                calendar.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(java.util.Calendar.MINUTE, minute);
+                selectedTimestamp = calendar.getTimeInMillis();
+                etExpDate.setText(new java.text.SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(calendar.getTime()));
+            }, calendar.get(java.util.Calendar.HOUR_OF_DAY), calendar.get(java.util.Calendar.MINUTE), true).show();
+
+        }, calendar.get(java.util.Calendar.YEAR), calendar.get(java.util.Calendar.MONTH), calendar.get(java.util.Calendar.DAY_OF_MONTH)).show();
     }
 
     public void updateUI() {
@@ -69,11 +90,6 @@ public class HomeFragment extends Fragment {
             } else {
                 tvTotalBalance.setTextColor(getResources().getColor(R.color.white));
             }
-
-            List<String> categories = activity.getCategories();
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categories);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spExpCategory.setAdapter(adapter);
         }
     }
 }

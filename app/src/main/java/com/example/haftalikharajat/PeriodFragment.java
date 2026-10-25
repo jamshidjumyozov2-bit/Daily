@@ -20,7 +20,7 @@ import java.util.Map;
 public class PeriodFragment extends Fragment {
 
     private int type;
-    private TextView tvPeriodAnalysis, tvPeriodHistory;
+    private TextView tvPeriodHistory;
     private String filterDate = "";
 
     public void setFilterDate(String date) {
@@ -48,7 +48,6 @@ public class PeriodFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_period, container, false);
-        tvPeriodAnalysis = view.findViewById(R.id.tvPeriodAnalysis);
         tvPeriodHistory = view.findViewById(R.id.tvPeriodHistory);
         updateData();
         return view;
@@ -68,24 +67,6 @@ public class PeriodFragment extends Fragment {
         List<Expense> allExpenses = activity.getExpenses();
         List<Expense> filtered = filterExpenses(allExpenses);
         
-        double total = 0;
-        Map<String, Double> categoryTotals = new HashMap<>();
-        
-        for (Expense e : filtered) {
-            total += e.amount;
-            categoryTotals.put(e.category, categoryTotals.getOrDefault(e.category, 0.0) + e.amount);
-        }
-
-        StringBuilder analysis = new StringBuilder();
-        List<Map.Entry<String, Double>> sortedCats = new ArrayList<>(categoryTotals.entrySet());
-        Collections.sort(sortedCats, (e1, e2) -> e2.getValue().compareTo(e1.getValue()));
-
-        for (Map.Entry<String, Double> entry : sortedCats) {
-            analysis.append(String.format(Locale.getDefault(), "%s: %,.0f so'm (%.1f%%)\n", 
-                entry.getKey(), entry.getValue(), (total > 0 ? (entry.getValue() / total) * 100 : 0)));
-        }
-        tvPeriodAnalysis.setText(analysis.length() > 0 ? analysis.toString() : "Xarajatlar yo'q");
-
         StringBuilder history = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
         for (Expense e : filtered) {
@@ -93,12 +74,6 @@ public class PeriodFragment extends Fragment {
                 sdf.format(e.timestamp), e.name, e.amount));
         }
         tvPeriodHistory.setText(history.length() > 0 ? history.toString() : "Tarix bo'sh");
-
-        tvPeriodHistory.setOnLongClickListener(v -> {
-            // This is a simplified deletion for the text-based history
-            // In a real app, we'd use a RecyclerView with adapters
-            return true;
-        });
     }
 
     private List<Expense> filterExpenses(List<Expense> all) {
