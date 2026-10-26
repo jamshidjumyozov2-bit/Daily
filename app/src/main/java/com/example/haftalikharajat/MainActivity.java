@@ -27,8 +27,17 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Expense> expenseList = new ArrayList<>();
     private ArrayList<Income> incomeList = new ArrayList<>();
     private ArrayList<Debt> debtList = new ArrayList<>();
+    private java.util.Map<String, Integer> categoryUsage = new java.util.HashMap<>();
     private SharedPreferences prefs;
     private Gson gson = new Gson();
+
+    private static final List<String> DEFAULT_CATEGORIES = List.of(
+            "Oziq-ovqat", "Transport", "Uy-joy", "O'yin-kulgi", "Salomatlik",
+            "Kiyim-kechak", "Ta'lim", "Sovg'alar", "Internet", "Kommunal",
+            "Xayriya", "Kredit", "Sug'urta", "Maishiy texnika", "Restoran",
+            "Kafe", "Dorixona", "Sport", "Avtomobil", "Yoqilg'i",
+            "Go'zallik", "Xizmatlar", "Sayohat", "Hobbi", "Boshqa"
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +99,29 @@ public class MainActivity extends AppCompatActivity {
 
     public double getBalance() {
         double total = 0;
-        for (Income i : incomeList) total += i.amount;
-        for (Expense e : expenseList) total -= e.amount;
-        for (Debt d : debtList) {
-            if (!d.isPaid) {
-                if (d.isOwedToMe) total -= d.amount; // Money lent out (cash decreases)
-                else total += d.amount; // Money borrowed (cash increases)
+        if (incomeList != null) {
+            for (Income i : incomeList) {
+                if (i != null) total += i.amount;
+            }
+        }
+        if (expenseList != null) {
+            for (Expense e : expenseList) {
+                if (e != null) total -= e.amount;
+            }
+        }
+        if (debtList != null) {
+            for (Debt d : debtList) {
+                if (d != null && !d.isPaid) {
+                    if (d.isOwedToMe) {
+                        // "Berilgan" (Lent out) - money gone from pocket but expected back.
+                        // For cash balance, it should be subtracted.
+                        total -= d.amount;
+                    } else {
+                        // "Olingan" (Borrowed) - money added to pocket but owed.
+                        // For cash balance, it should be added.
+                        total += d.amount;
+                    }
+                }
             }
         }
         return total;
@@ -103,12 +129,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void addExpense(String name, double amount, String category, long timestamp) {
         expenseList.add(0, new Expense(name, amount, category, timestamp));
+        
+        // Update category usage
+        categoryUsage.put(category, categoryUsage.getOrDefault(category, 0) + 1);
+        
         saveData();
         refreshAll();
     }
 
-    public void addIncome(String source, double amount) {
-        incomeList.add(0, new Income(source, amount, System.currentTimeMillis()));
+    public void addIncome(String source, double amount, String accountType, long timestamp) {
+        incomeList.add(0, new Income(source, amount, accountType, timestamp));
         saveData();
         refreshAll();
     }
@@ -138,12 +168,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public List<String> getCategories() {
-        return List.of("Oziq-ovqat", "Transport", "Uy-joy", "O'yin-kulgi", "Salomatlik", "Kiyim-kechak", "Ta'lim", "Sovg'alar", "Internet", "Boshqa");
+        List<String> sortedCategories = new ArrayList<>(DEFAULT_CATEGORIES);
+        sortedCategories.sort((c1, c2) -> {
+            int count1 = categoryUsage.getOrDefault(c1, 0);
+            int count2 = categoryUsage.getOrDefault(c2, 0);
+            return Integer.compare(count2, count1); // Kamayish tartibida
+        });
+        return sortedCategories;
     }
 
     public void refreshAll() {
         for (Fragment f : getSupportFragmentManager().getFragments()) {
             if (f instanceof HomeFragment) ((HomeFragment) f).updateUI();
+            if (f instanceof IncomeFragment) ((IncomeFragment) f).updateList();
             if (f instanceof DebtFragment) ((DebtFragment) f).updateList();
             if (f instanceof HistoryFragment) ((HistoryFragment) f).refresh();
         }
@@ -154,20 +191,41 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("expenses", gson.toJson(expenseList));
         editor.putString("incomes", gson.toJson(incomeList));
         editor.putString("debts", gson.toJson(debtList));
+        editor.putString("category_usage", gson.toJson(categoryUsage));
         editor.apply();
     }
 
     private void loadData() {
         try {
             String e = prefs.getString("expenses", null);
-            if (e != null) expenseList = gson.fromJson(e, new TypeToken<ArrayList<Expense>>(){}.getType());
+            if (e != null) {
+                ArrayList<Expense> list = gson.fromJson(e, new TypeToken<ArrayList<Expense>>(){}.getType());
+                if (list != null) expenseList = list;
+            }
             String i = prefs.getString("incomes", null);
-            if (i != null) incomeList = gson.fromJson(i, new TypeToken<ArrayList<Income>>(){}.getType());
+            if (i != null) {
+                ArrayList<Income> list = gson.fromJson(i, new TypeToken<ArrayList<Income>>(){}.getType());
+                if (list != null) incomeList = list;
+            }
             String d = prefs.getString("debts", null);
-            if (d != null) debtList = gson.fromJson(d, new TypeToken<ArrayList<Debt>>(){}.getType());
+            if (d != null) {
+                ArrayList<Debt> list = gson.fromJson(d, new TypeToken<ArrayList<Debt>>(){}.getType());
+                if (list != null) debtList = list;
+            }
+            String cu = prefs.getString("category_usage", null);
+            if (cu != null) {
+                java.util.Map<String, Integer> usage = gson.fromJson(cu, new TypeToken<java.util.Map<String, Integer>>(){}.getType());
+                if (usage != null) categoryUsage = usage;
+            }
         } catch (Exception ignored) {}
+        
+        if (expenseList == null) expenseList = new ArrayList<>();
+        if (incomeList == null) incomeList = new ArrayList<>();
+        if (debtList == null) debtList = new ArrayList<>();
+        if (categoryUsage == null) categoryUsage = new java.util.HashMap<>();
     }
 
     public List<Expense> getExpenses() { return expenseList; }
+    public List<Income> getIncomes() { return incomeList; }
     public List<Debt> getDebts() { return debtList; }
 }

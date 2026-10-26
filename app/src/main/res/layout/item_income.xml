@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginHorizontal="4dp"
+    android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
-    app:cardElevation="1dp"
-    app:cardBackgroundColor="@color/surface">
+    app:cardBackgroundColor="#1E293B"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,50 +18,92 @@
         <View
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/circle_bg_income"/>
+            android:background="@drawable/bg_input_dark"
+            android:padding="12dp"/>
 
-        <TextView
-            android:id="@+id/tvIncIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:text="📈"
-            android:textSize="20sp"
-            android:translationX="-48dp"/>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:rotation="-90"
+            app:tint="#94A3B8"
+            android:layout_marginStart="-36dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="-36dp">
+            android:layout_marginStart="24dp">
 
             <TextView
                 android:id="@+id/tvIncSource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Manba"
-                android:textColor="@color/black"
+                android:text="avans"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvIncAccountType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Karta (Uzcard/Humo)"
+                android:textColor="#94A3B8"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/tvIncDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sana"
-                android:textColor="@color/secondary"
-                android:textSize="12sp"/>
+                android:text="24-oktabr"
+                android:textColor="#475569"
+                android:textSize="10sp"
+                android:visibility="gone"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvIncAmount"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0 so'm"
-            android:textColor="@color/income_text"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/tvIncAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+10 000 000 so'm"
+                android:textColor="#10B981"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageButton
+                    android:id="@+id/btnEditInc"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/black"
+                    android:scaleType="centerInside"/>
+
+                <ImageButton
+                    android:id="@+id/btnDeleteInc"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_delete"
+                    app:tint="#EF4444"
+                    android:layout_marginStart="12dp"
+                    android:scaleType="centerInside"/>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

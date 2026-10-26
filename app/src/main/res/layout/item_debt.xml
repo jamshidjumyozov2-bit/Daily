@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/surface">
+    app:cardBackgroundColor="#1E293B"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,94 +14,140 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tvDebtPerson"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Kim"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+            <FrameLayout
+                android:id="@+id/flIconContainer"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_input_dark">
+                <ImageView
+                    android:id="@+id/ivDebtIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_debt"
+                    app:tint="#94A3B8"/>
+            </FrameLayout>
 
-            <TextView
-                android:id="@+id/tvDebtType"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
-                android:background="@drawable/badge_bg"
-                android:text="Berilgan"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
+                android:layout_toEndOf="@id/flIconContainer"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical"
+                android:layout_centerVertical="true">
 
-        <TextView
-            android:id="@+id/tvDebtAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 so'm"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="4dp"/>
+                <TextView
+                    android:id="@+id/tvDebtPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alisher Vohidov"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvDebtReason"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sabab"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="4dp"/>
+                <TextView
+                    android:id="@+id/tvDebtType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Menga berishadi"
+                    android:textColor="#94A3B8"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvDebtPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tel"
-            android:textSize="14sp"
-            android:textColor="@color/secondary"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical"
+                android:gravity="end"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/tvDebtAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500,000"
+                    android:textColor="#10B981"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDebtStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6 kun o'tdi"
+                    android:textColor="#EF4444"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/edit_text_bg"
-            android:layout_marginTop="12dp"
+            android:background="#334155"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="12dp"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvDebtDue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Muddat: 01.01.2024"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-
-            <Button
-                android:id="@+id/btnPay"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:id="@+id/tvDebtReason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Qaytarildi"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-        </LinearLayout>
+                android:text="Qarz sababi / izoh"
+                android:textColor="#94A3B8"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_toStartOf="@+id/llActions"/>
+
+            <LinearLayout
+                android:id="@+id/llActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/btnCall"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_call"
+                    app:tint="#3B82F6"
+                    android:scaleType="centerInside"/>
+
+                <ImageButton
+                    android:id="@+id/btnPay"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_check"
+                    app:tint="#10B981"
+                    android:layout_marginStart="16dp"
+                    android:scaleType="centerInside"/>
+
+                <ImageButton
+                    android:id="@+id/btnDelete"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_delete"
+                    app:tint="#EF4444"
+                    android:layout_marginStart="16dp"
+                    android:scaleType="centerInside"/>
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

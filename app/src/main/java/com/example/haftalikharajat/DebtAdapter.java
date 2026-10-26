@@ -36,36 +36,79 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Debt debt = debts.get(position);
-        holder.tvPerson.setText(debt.personName);
-        holder.tvAmount.setText(String.format(Locale.getDefault(), "%,.0f so'm", debt.amount));
-        holder.tvReason.setText(debt.reason);
-        holder.tvPhone.setText(debt.phone);
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        holder.tvDue.setText("Muddat: " + sdf.format(debt.dateDue));
-        
-        holder.tvType.setText(debt.isOwedToMe ? "Menga berishadi" : "Men berishim kerak");
-        holder.tvType.setTextColor(0xFF000000);
-        holder.tvType.setBackgroundResource(R.drawable.badge_bg);
-        // Remove direct background color setting to use drawable badge_bg which is now black based on primary color
+        if (debt == null) return;
 
+        Locale uzLocale = new Locale("uz");
+        if (holder.tvPerson != null) holder.tvPerson.setText(debt.personName != null ? debt.personName : "");
+        if (holder.tvAmount != null) holder.tvAmount.setText(String.format(uzLocale, "%,.0f", debt.amount));
+        if (holder.tvReason != null) holder.tvReason.setText(debt.reason != null ? debt.reason : "");
+        
+        if (holder.tvType != null) {
+            holder.tvType.setText(debt.isOwedToMe ? "Menga berishadi" : "Men berishim kerak");
+        }
+        
         if (debt.isPaid) {
-            holder.btnPay.setVisibility(View.GONE);
-            holder.tvAmount.setAlpha(0.5f);
+            if (holder.btnPay != null) holder.btnPay.setVisibility(View.GONE);
+            if (holder.tvAmount != null) holder.tvAmount.setAlpha(0.5f);
+            if (holder.tvStatus != null) {
+                holder.tvStatus.setText("To'langan");
+                holder.tvStatus.setTextColor(android.graphics.Color.parseColor("#10B981"));
+            }
         } else {
-            holder.btnPay.setVisibility(View.VISIBLE);
-            holder.btnPay.setOnClickListener(v -> listener.onPaid(debt));
+            if (holder.btnPay != null) {
+                holder.btnPay.setVisibility(View.VISIBLE);
+                holder.btnPay.setOnClickListener(v -> {
+                    if (listener != null) listener.onPaid(debt);
+                });
+            }
+            if (holder.tvAmount != null) holder.tvAmount.setAlpha(1.0f);
+            
+            // Calculate status
+            long now = System.currentTimeMillis();
+            if (now > debt.dateDue) {
+                long diff = now - debt.dateDue;
+                long days = diff / (24 * 60 * 60 * 1000);
+                if (holder.tvStatus != null) {
+                    holder.tvStatus.setText(days + " kun o'tdi");
+                    holder.tvStatus.setTextColor(android.graphics.Color.parseColor("#EF4444"));
+                }
+            } else {
+                if (holder.tvStatus != null) {
+                    holder.tvStatus.setText("Faol");
+                    holder.tvStatus.setTextColor(android.graphics.Color.parseColor("#3B82F6"));
+                }
+            }
         }
 
-        holder.itemView.setOnLongClickListener(v -> {
-            new android.app.AlertDialog.Builder(v.getContext())
-                    .setTitle("O'chirish")
-                    .setMessage("Ushbu qarzni o'chirib tashlamoqchimisiz?")
-                    .setPositiveButton("Ha", (dialog, which) -> listener.onDelete(debt))
-                    .setNegativeButton("Yo'q", null)
-                    .show();
-            return true;
-        });
+        if (holder.btnDelete != null) {
+            holder.btnDelete.setOnClickListener(v -> {
+                new android.app.AlertDialog.Builder(v.getContext())
+                        .setTitle("O'chirish")
+                        .setMessage("Ushbu qarzni o'chirib tashlamoqchimisiz?")
+                        .setPositiveButton("Ha", (dialog, which) -> {
+                            if (listener != null) listener.onDelete(debt);
+                        })
+                        .setNegativeButton("Yo'q", null)
+                        .show();
+            });
+        }
+
+        if (holder.btnCall != null) {
+            if (debt.phone != null && !debt.phone.isEmpty()) {
+                holder.btnCall.setVisibility(View.VISIBLE);
+                holder.btnCall.setOnClickListener(v -> {
+                    try {
+                        android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_DIAL);
+                        intent.setData(android.net.Uri.parse("tel:" + debt.phone));
+                        v.getContext().startActivity(intent);
+                    } catch (Exception e) {
+                        android.widget.Toast.makeText(v.getContext(), "Qo'ng'iroq qilib bo'lmadi", android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                holder.btnCall.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -74,18 +117,19 @@ public class DebtAdapter extends RecyclerView.Adapter<DebtAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvPerson, tvAmount, tvReason, tvPhone, tvDue, tvType;
-        Button btnPay;
+        TextView tvPerson, tvAmount, tvReason, tvType, tvStatus;
+        View btnPay, btnCall, btnDelete;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvPerson = itemView.findViewById(R.id.tvDebtPerson);
             tvAmount = itemView.findViewById(R.id.tvDebtAmount);
             tvReason = itemView.findViewById(R.id.tvDebtReason);
-            tvPhone = itemView.findViewById(R.id.tvDebtPhone);
-            tvDue = itemView.findViewById(R.id.tvDebtDue);
             tvType = itemView.findViewById(R.id.tvDebtType);
+            tvStatus = itemView.findViewById(R.id.tvDebtStatus);
             btnPay = itemView.findViewById(R.id.btnPay);
+            btnCall = itemView.findViewById(R.id.btnCall);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }
