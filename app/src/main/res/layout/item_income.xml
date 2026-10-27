@@ -5,8 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="#1E293B"
-    app:strokeWidth="0dp">
+    app:cardBackgroundColor="@color/bg_card"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/border_input">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         <View
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/bg_input_dark"
+            android:background="@drawable/bg_input_field"
             android:padding="12dp"/>
 
         <ImageView
@@ -26,7 +27,7 @@
             android:layout_height="24dp"
             android:src="@android:drawable/ic_menu_sort_by_size"
             android:rotation="-90"
-            app:tint="#94A3B8"
+            app:tint="@color/income_green"
             android:layout_marginStart="-36dp"/>
 
         <LinearLayout
@@ -41,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="avans"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -50,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Karta (Uzcard/Humo)"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"/>
 
             <TextView
@@ -74,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+10 000 000 so'm"
-                android:textColor="#10B981"
+                android:textColor="@color/income_green"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -90,7 +91,7 @@
                     android:layout_height="24dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_edit"
-                    app:tint="@color/black"
+                    app:tint="@color/text_secondary"
                     android:scaleType="centerInside"/>
 
                 <ImageButton

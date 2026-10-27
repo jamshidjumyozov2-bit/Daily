@@ -5,8 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="#1E293B"
-    app:strokeWidth="0dp">
+    app:cardBackgroundColor="@color/bg_card"
+    app:cardElevation="0dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/border_input">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,14 +25,14 @@
                 android:id="@+id/flIconContainer"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/bg_input_dark">
+                android:background="@drawable/bg_input_field">
                 <ImageView
                     android:id="@+id/ivDebtIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_debt"
-                    app:tint="#94A3B8"/>
+                    app:tint="@color/primary"/>
             </FrameLayout>
 
             <LinearLayout
@@ -46,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Alisher Vohidov"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -55,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Menga berishadi"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -72,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="500,000"
-                    android:textColor="#10B981"
+                    android:textColor="@color/income_green"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -91,7 +93,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#334155"
+            android:background="@color/border_input"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="12dp"/>
 
@@ -104,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Qarz sababi / izoh"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -124,7 +126,7 @@
                     android:layout_height="24dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_call"
-                    app:tint="#3B82F6"
+                    app:tint="@color/primary"
                     android:scaleType="centerInside"/>
 
                 <ImageButton
@@ -133,7 +135,7 @@
                     android:layout_height="24dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_check"
-                    app:tint="#10B981"
+                    app:tint="@color/income_green"
                     android:layout_marginStart="16dp"
                     android:scaleType="centerInside"/>
 

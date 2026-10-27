@@ -11,90 +11,87 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Header Info -->
+        <!-- Top Toggle -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:layout_marginBottom="16dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvMonthlyTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="30 kunlik xarajatlar"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Har bir kunning xarajati, so'mda."
-                    android:textColor="@color/dark_text_secondary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvMonthlyDateRange"
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupMonthly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_input_dark"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:text="1 Okt - 30 Okt"
-                android:textColor="@color/dark_text_primary"
-                android:textSize="12sp" />
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:checkedButton="@+id/btn30Days">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn4Weeks"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4 haftalik"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_calendar"
+                    app:strokeColor="@color/primary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn30Days"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30 kunlik"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_calendar"
+                    app:strokeColor="@color/primary" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Boshlanish sanasi"
+                    android:textColor="@color/dark_text_secondary"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/tvMonthlyDateRange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="27 Sen 2025 - 26 Okt 2025"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Chart Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/dark_card"
-            android:layout_marginBottom="16dp">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/layoutMonthlyChart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="bottom"
-                    android:paddingHorizontal="16dp"
-                    android:paddingBottom="16dp" />
-            </HorizontalScrollView>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Summary & Categories Row -->
+        <!-- Main Content (Chart and Info) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="vertical">
 
-            <!-- Total Card -->
+            <!-- Chart Card -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="#1E293B">
+                app:cardBackgroundColor="#0F172A"
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -102,56 +99,165 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_bg_card"
-                        android:backgroundTint="#2D3748">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_income"
-                            app:tint="@color/graph_blue" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Jami xarajatlar"
-                        android:textColor="@color/dark_text_secondary"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
-                    <TextView
-                        android:id="@+id/tvMonthlyTotalAmount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 450 000 so'm"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/status_bg_blue">
+                            <ImageView
+                                android:id="@+id/ivMonthlyTypeIcon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_income"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvMonthlyMainTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="30 kunlik xarajatlar"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tvMonthlySubTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Har bir kunning xarajati, ming so'mda."
+                                android:textColor="@color/dark_text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Chart Placeholder / Simple Bar Chart -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:layout_marginTop="16dp">
+
+                        <!-- Y-axis labels -->
+                        <LinearLayout
+                            android:id="@+id/layoutYAxisMonthly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="180dp"
+                            android:orientation="vertical"
+                            android:gravity="end"
+                            android:paddingEnd="8dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:text="100" android:textSize="10sp" android:textColor="@color/dark_text_secondary"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:text="80" android:textSize="10sp" android:textColor="@color/dark_text_secondary"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:text="60" android:textSize="10sp" android:textColor="@color/dark_text_secondary"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:text="40" android:textSize="10sp" android:textColor="@color/dark_text_secondary"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:text="20" android:textSize="10sp" android:textColor="@color/dark_text_secondary"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1" android:text="0" android:textSize="10sp" android:textColor="@color/dark_text_secondary"/>
+                        </LinearLayout>
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/layoutYAxisMonthly"
+                            android:scrollbars="none">
+                            <LinearLayout
+                                android:id="@+id/layoutMonthlyChart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="200dp"
+                                android:orientation="horizontal"
+                                android:gravity="bottom"
+                                android:paddingBottom="20dp" />
+                        </HorizontalScrollView>
+
+                        <!-- X-axis labels would be inside the chart layout -->
+                    </RelativeLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Categories Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
+            <!-- Bottom Cards Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.2"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="#1E293B">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
-                <LinearLayout
-                    android:id="@+id/layoutMonthlyCategories"
-                    android:layout_width="match_parent"
+                <!-- Total Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-                    <!-- Categories will be added here -->
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#1E293B">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/status_bg_blue"
+                            android:backgroundTint="#2D3748">
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_debt"
+                                app:tint="@color/graph_blue" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Jami xarajatlar"
+                            android:textColor="@color/dark_text_secondary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvMonthlyTotalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 450 000 so'm"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Categories Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#1E293B">
+
+                    <LinearLayout
+                        android:id="@+id/layoutMonthlyCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <!-- Categories will be added here -->
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
         </LinearLayout>
 
         <TextView

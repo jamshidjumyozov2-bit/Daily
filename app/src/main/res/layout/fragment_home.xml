@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Byudjet"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -29,15 +29,16 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
-                app:cardBackgroundColor="#1E293B"
+                app:cardBackgroundColor="@color/bg_card"
                 app:cardCornerRadius="14dp"
-                app:strokeWidth="0dp">
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/border_input">
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@android:drawable/ic_menu_search"
-                    app:tint="#94A3B8"
+                    app:tint="@color/text_secondary"
                     android:contentDescription="Qidiruv" />
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
@@ -48,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="JAMI BALANS HAFTA 44"
-            android:textColor="#3B82F6"
+            android:textColor="@color/primary"
             android:textSize="12sp"
             android:textStyle="bold"
             android:background="@drawable/bg_label_pill"
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="17 578 000 so'm"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -103,8 +104,9 @@
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:strokeWidth="0dp"
-                app:cardBackgroundColor="#1E293B">
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/border_input"
+                app:cardBackgroundColor="@color/bg_card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -122,13 +124,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Daromad"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/text_secondary"
                             android:textSize="12sp"/>
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@android:drawable/arrow_up_float"
-                            app:tint="#10B981"/>
+                            app:tint="@color/income_green"/>
                     </LinearLayout>
 
                     <TextView
@@ -136,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+18 450 000"
-                        android:textColor="#10B981"
+                        android:textColor="@color/income_green"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:layout_marginTop="8dp"/>
@@ -150,8 +152,9 @@
                 android:layout_marginStart="8dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:strokeWidth="0dp"
-                app:cardBackgroundColor="#1E293B">
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/border_input"
+                app:cardBackgroundColor="@color/bg_card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -169,13 +172,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Xarajat"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/text_secondary"
                             android:textSize="12sp"/>
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@android:drawable/arrow_down_float"
-                            app:tint="#EF4444"/>
+                            app:tint="@color/light_green"/>
                     </LinearLayout>
 
                     <TextView
@@ -183,7 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="-872 000"
-                        android:textColor="#EF4444"
+                        android:textColor="@color/light_green"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:layout_marginTop="8dp"/>
@@ -198,8 +201,9 @@
             android:layout_marginBottom="24dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:strokeWidth="0dp"
-            app:cardBackgroundColor="#1E293B">
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/border_input"
+            app:cardBackgroundColor="@color/bg_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +221,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Haftalik limit: 3 000 000 so'm"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textStyle="bold"
                         android:textSize="14sp"/>
                     <TextView
@@ -225,7 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
-                        android:textColor="#3B82F6"
+                        android:textColor="@color/primary"
                         android:textStyle="bold"
                         android:textSize="14sp"/>
                 </LinearLayout>
@@ -261,13 +265,13 @@
                     android:text="Xarajat qo'shish"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/text_primary"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TEZKOR KIRITISH"
                     android:textSize="12sp"
-                    android:textColor="#475569"
+                    android:textColor="@color/text_secondary"
                     android:textStyle="bold"
                     android:letterSpacing="0.05"/>
             </LinearLayout>
@@ -278,18 +282,18 @@
                 android:text="XARAJAT NOMI"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_secondary"
                 android:layout_marginBottom="10dp"/>
             <EditText
                 android:id="@+id/etExpName"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:hint="Masalan: Bozorlik"
-                android:background="@drawable/bg_input_dark"
+                android:background="@drawable/bg_input_field"
                 android:paddingHorizontal="16dp"
                 android:layout_marginBottom="16dp"
-                android:textColor="@color/white"
-                android:textColorHint="#475569"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
                 android:textSize="16sp"
                 android:inputType="text"/>
 
@@ -299,7 +303,7 @@
                 android:text="SUMMA"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_secondary"
                 android:layout_marginBottom="10dp"/>
             <EditText
                 android:id="@+id/etExpAmount"
@@ -307,11 +311,11 @@
                 android:layout_height="56dp"
                 android:hint="0 so'm"
                 android:inputType="numberDecimal"
-                android:background="@drawable/bg_input_dark"
+                android:background="@drawable/bg_input_field"
                 android:paddingHorizontal="16dp"
                 android:layout_marginBottom="16dp"
-                android:textColor="@color/white"
-                android:textColorHint="#475569"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
                 android:textSize="16sp"/>
 
             <LinearLayout
@@ -332,12 +336,12 @@
                         android:text="SANA"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/text_secondary"
                         android:layout_marginBottom="10dp"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:background="@drawable/bg_input_dark"
+                        android:background="@drawable/bg_input_field"
                         android:paddingHorizontal="16dp">
                         <EditText
                             android:id="@+id/etExpDate"
@@ -346,8 +350,8 @@
                             android:hint="2026-10-26"
                             android:background="@null"
                             android:focusable="false"
-                            android:textColor="@color/white"
-                            android:textColorHint="#475569"
+                            android:textColor="@color/text_primary"
+                            android:textColorHint="@color/text_secondary"
                             android:textSize="16sp"/>
                         <ImageView
                             android:layout_width="24dp"
@@ -355,7 +359,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_calendar"
-                            app:tint="@color/black"/>
+                            app:tint="@color/text_secondary"/>
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -371,12 +375,12 @@
                         android:text="VAQT"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/text_secondary"
                         android:layout_marginBottom="10dp"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:background="@drawable/bg_input_dark"
+                        android:background="@drawable/bg_input_field"
                         android:paddingHorizontal="16dp">
                         <EditText
                             android:id="@+id/etExpTime"
@@ -385,8 +389,8 @@
                             android:hint="14:06"
                             android:background="@null"
                             android:focusable="false"
-                            android:textColor="@color/white"
-                            android:textColorHint="#475569"
+                            android:textColor="@color/text_primary"
+                            android:textColorHint="@color/text_secondary"
                             android:textSize="16sp"/>
                         <ImageView
                             android:layout_width="24dp"
@@ -394,7 +398,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@android:drawable/ic_menu_recent_history"
-                            app:tint="@color/black"/>
+                            app:tint="@color/text_secondary"/>
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -405,7 +409,7 @@
                 android:text="KATEGORIYA"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_secondary"
                 android:layout_marginBottom="10dp"/>
 
             <HorizontalScrollView
@@ -417,7 +421,8 @@
                     android:id="@+id/chipGroupCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:singleSelection="true">
+                    app:singleSelection="true"
+                    app:selectionRequired="true">
                     <!-- Chips will be added programmatically or statically -->
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
@@ -427,7 +432,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:text="XARAJATNI SAQLASH"
-                android:backgroundTint="#3B82F6"
+                android:backgroundTint="@color/primary"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="16sp"

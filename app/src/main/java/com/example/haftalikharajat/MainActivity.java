@@ -19,6 +19,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import android.os.Build;
+import android.view.View;
+import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,13 +71,30 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewPager.setUserInputEnabled(false);
 
+        final View fragmentContainer = findViewById(R.id.fragment_container);
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                fragmentContainer.setVisibility(View.VISIBLE);
+            } else {
+                fragmentContainer.setVisibility(View.GONE);
+            }
+        });
+
         bottomNav.setOnItemSelectedListener(item -> {
+            // Tafsilotlar oynalarini yopish
+            clearDetailFragments();
+
             int id = item.getItemId();
             if (id == R.id.nav_expenses) mainViewPager.setCurrentItem(0, false);
             else if (id == R.id.nav_income) mainViewPager.setCurrentItem(1, false);
             else if (id == R.id.nav_history) mainViewPager.setCurrentItem(2, false);
             else if (id == R.id.nav_debts) mainViewPager.setCurrentItem(3, false);
             return true;
+        });
+
+        bottomNav.setOnItemReselectedListener(item -> {
+            // Xuddi shu bo'lim qayta bosilganda ham tafsilotlarni yopish
+            clearDetailFragments();
         });
 
         setSupportActionBar(findViewById(R.id.toolbar));
@@ -155,6 +174,19 @@ public class MainActivity extends AppCompatActivity {
         refreshAll();
     }
 
+    public void updateExpense(Expense oldExpense, String newName, double newAmount, String newCategory, long newTimestamp) {
+        int index = expenseList.indexOf(oldExpense);
+        if (index != -1) {
+            Expense updated = expenseList.get(index);
+            updated.name = newName;
+            updated.amount = newAmount;
+            updated.category = newCategory;
+            updated.timestamp = newTimestamp;
+            saveData();
+            refreshAll();
+        }
+    }
+
     public void removeIncome(Income i) {
         incomeList.remove(i);
         saveData();
@@ -228,4 +260,10 @@ public class MainActivity extends AppCompatActivity {
     public List<Expense> getExpenses() { return expenseList; }
     public List<Income> getIncomes() { return incomeList; }
     public List<Debt> getDebts() { return debtList; }
+
+    private void clearDetailFragments() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
 }

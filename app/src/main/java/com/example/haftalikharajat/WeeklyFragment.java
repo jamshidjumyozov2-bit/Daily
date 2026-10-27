@@ -1,19 +1,16 @@
 package com.example.haftalikharajat;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -22,9 +19,10 @@ import java.util.Locale;
 public class WeeklyFragment extends Fragment {
 
     private LinearLayout layoutChart;
-    private TextView tvAveragePrice;
+    private TextView tvAveragePrice, tvTotalWeeklyExpense, tvMaxDay, tvActiveDays;
     private RecyclerView rvDays;
-    private String[] dayLabels = {"@", "s", "ch", "p", "j", "sh", "y"};
+    private String[] dayLabels = {"D", "S", "Ch", "P", "J", "Sh", "Y"};
+    private String[] fullDayNames = {"Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba", "Yakshanba"};
 
     @Nullable
     @Override
@@ -32,6 +30,9 @@ public class WeeklyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weekly, container, false);
         layoutChart = view.findViewById(R.id.layoutChart);
         tvAveragePrice = view.findViewById(R.id.tvAveragePrice);
+        tvTotalWeeklyExpense = view.findViewById(R.id.tvTotalWeeklyExpense);
+        tvMaxDay = view.findViewById(R.id.tvMaxDay);
+        tvActiveDays = view.findViewById(R.id.tvActiveDays);
         rvDays = view.findViewById(R.id.rvDays);
         
         rvDays.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -50,7 +51,6 @@ public class WeeklyFragment extends Fragment {
         for (int i = 0; i < 7; i++) dailyExpenses.add(new ArrayList<>());
 
         Calendar cal = Calendar.getInstance();
-        // Set to start of current week (Monday)
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -61,8 +61,8 @@ public class WeeklyFragment extends Fragment {
         for (Expense e : all) {
             if (e.timestamp >= weekStart && e.timestamp < weekStart + 7 * 24 * 60 * 60 * 1000L) {
                 cal.setTimeInMillis(e.timestamp);
-                int day = cal.get(Calendar.DAY_OF_WEEK); // Sunday=1, Monday=2...
-                int index = (day + 5) % 7; // Map Monday to 0, Sunday to 6
+                int day = cal.get(Calendar.DAY_OF_WEEK); 
+                int index = (day + 5) % 7; 
                 dailyTotals[index] += e.amount;
                 dailyExpenses.get(index).add(e);
             }
@@ -70,40 +70,65 @@ public class WeeklyFragment extends Fragment {
 
         double total = 0;
         double max = 0;
-        int activeDays = 0;
-        for (double d : dailyTotals) {
+        int maxIndex = 0;
+        int activeCount = 0;
+        for (int i = 0; i < 7; i++) {
+            double d = dailyTotals[i];
             total += d;
-            if (d > max) max = d;
-            if (d > 0) activeDays++;
+            if (d > max) {
+                max = d;
+                maxIndex = i;
+            }
+            if (d > 0) activeCount++;
         }
-        double avg = activeDays > 0 ? total / activeDays : 0;
-        tvAveragePrice.setText(String.format(Locale.getDefault(), "o'rtacha narx %,.0f", avg));
+        
+        double avg = total / 7;
+        Locale uz = new Locale("uz");
+        tvAveragePrice.setText(String.format(uz, "%,.0f so'm", avg));
+        tvTotalWeeklyExpense.setText(String.format(uz, "%,.0f so'm", total));
+        tvMaxDay.setText(String.format(uz, "%s (%,.0f k)", fullDayNames[maxIndex], max / 1000));
+        tvActiveDays.setText(String.format(uz, "%d kun / 7 kun", activeCount));
 
         layoutChart.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getContext());
+        float maxChartHeightDp = 180f;
+        float density = getResources().getDisplayMetrics().density;
+        
         for (int i = 0; i < 7; i++) {
-            View barView = inflater.inflate(R.layout.item_day_bar, layoutChart, false);
-            View bar = barView.findViewById(R.id.viewBar);
-            TextView tvDay = barView.findViewById(R.id.tvBarDay);
-            TextView tvAmt = barView.findViewById(R.id.tvBarAmount);
+            View barContainer = inflater.inflate(R.layout.item_day_bar, layoutChart, false);
+            View bar = barContainer.findViewById(R.id.viewBar);
+            TextView tvDay = barContainer.findViewById(R.id.tvBarDay);
 
             tvDay.setText(dayLabels[i]);
-            tvAmt.setText(dailyTotals[i] > 0 ? String.format(Locale.getDefault(), "%.0f", dailyTotals[i]/1000) + "k" : "");
             
-            int height = max > 0 ? (int) ((dailyTotals[i] / max) * 150 * getResources().getDisplayMetrics().density) : 0;
+            int height = max > 0 ? (int) ((dailyTotals[i] / max) * maxChartHeightDp * density) : 0;
+            if (height < 10 && dailyTotals[i] > 0) height = (int)(10 * density);
+
             ViewGroup.LayoutParams lp = bar.getLayoutParams();
             lp.height = height;
             bar.setLayoutParams(lp);
 
-            layoutChart.addView(barView);
+            final int finalI = i;
+            bar.setOnClickListener(v -> openDayDetails(fullDayNames[finalI], dailyExpenses.get(finalI)));
+            
+            layoutChart.addView(barContainer);
         }
 
         rvDays.setAdapter(new DayAdapter(dailyExpenses));
     }
 
+    private void openDayDetails(String dayName, List<Expense> expenses) {
+        if (expenses.isEmpty()) return;
+        
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .add(R.id.fragment_container, DailyExpensesFragment.newInstance(dayName, expenses))
+                .addToBackStack(null)
+                .commit();
+    }
+
     class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
         List<List<Expense>> data;
-        String[] fullDayNames = {"Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba", "Yakshanba"};
 
         DayAdapter(List<List<Expense>> data) { this.data = data; }
 
@@ -120,12 +145,24 @@ public class WeeklyFragment extends Fragment {
             for (Expense e : data.get(position)) dayTotal += e.amount;
 
             holder.tvName.setText(fullDayNames[position]);
-            holder.tvAmount.setText(String.format(Locale.getDefault(), "%,.0f so'm", dayTotal));
-            holder.tvAmount.setTextColor(getResources().getColor(R.color.black));
+            holder.tvAmount.setText(String.format(new Locale("uz"), "%,.0f so'm", dayTotal));
+            holder.tvAmount.setTextColor(getResources().getColor(R.color.dark_text_primary));
+            holder.tvName.setTextColor(getResources().getColor(R.color.dark_text_primary));
             
-            holder.itemView.setOnClickListener(v -> {
-                showDayDetails(fullDayNames[position], data.get(position));
-            });
+            // Hide delete/edit buttons for this summary view
+            holder.v.findViewById(R.id.btnEditInc).setVisibility(View.GONE);
+            holder.v.findViewById(R.id.btnDeleteInc).setVisibility(View.GONE);
+            holder.v.findViewById(R.id.tvIncAccountType).setVisibility(View.GONE);
+            
+            // Make card match dark theme if possible (it's using item_income which has a background)
+            // But better to just update colors here
+            View card = holder.v;
+            if (card instanceof com.google.android.material.card.MaterialCardView) {
+                ((com.google.android.material.card.MaterialCardView) card).setCardBackgroundColor(android.content.res.ColorStateList.valueOf(getResources().getColor(R.color.dark_card)));
+                ((com.google.android.material.card.MaterialCardView) card).setStrokeColor(android.content.res.ColorStateList.valueOf(0));
+            }
+
+            holder.itemView.setOnClickListener(v -> openDayDetails(fullDayNames[position], data.get(position)));
         }
 
         @Override
@@ -133,30 +170,13 @@ public class WeeklyFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvName, tvAmount;
+            View v;
             ViewHolder(View v) {
                 super(v);
+                this.v = v;
                 tvName = v.findViewById(R.id.tvIncSource);
                 tvAmount = v.findViewById(R.id.tvIncAmount);
             }
         }
-    }
-
-    private void showDayDetails(String dayName, List<Expense> expenses) {
-        if (expenses.isEmpty()) {
-            Toast.makeText(getContext(), dayName + " kuni xarajatlar yo'q", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        for (Expense e : expenses) {
-            sb.append(String.format(Locale.getDefault(), "%s | %s | %,.0f so'm\n", sdf.format(e.timestamp), e.name, e.amount));
-        }
-
-        new AlertDialog.Builder(getContext())
-                .setTitle(dayName + " xarajatlari")
-                .setMessage(sb.toString())
-                .setPositiveButton("OK", null)
-                .show();
     }
 }

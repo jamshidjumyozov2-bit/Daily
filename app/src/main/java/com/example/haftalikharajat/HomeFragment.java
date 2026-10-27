@@ -84,6 +84,9 @@ public class HomeFragment extends Fragment {
             chip.setClickable(true);
             chip.setChipBackgroundColorResource(R.color.bg_input);
             chip.setTextColor(getResources().getColor(R.color.text_primary));
+            if (cat.equals(selectedCategory)) {
+                chip.setChecked(true);
+            }
             chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) selectedCategory = cat;
             });

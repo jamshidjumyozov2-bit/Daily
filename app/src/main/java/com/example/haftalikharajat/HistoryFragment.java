@@ -37,6 +37,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public Fragment createFragment(int position) {
                 if (position == 1) return new WeeklyFragment();
+                if (position == 2) return new MonthlyFragment();
                 return PeriodFragment.newInstance(position);
             }
 

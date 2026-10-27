@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121827">
+    android:background="@color/bg_app">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Daromad"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -28,15 +28,16 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
-                app:cardBackgroundColor="#1E293B"
+                app:cardBackgroundColor="@color/bg_card"
                 app:cardCornerRadius="14dp"
-                app:strokeWidth="0dp">
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/border_input">
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@android:drawable/ic_menu_search"
-                    app:tint="#94A3B8"
+                    app:tint="@color/text_secondary"
                     android:contentDescription="Qidiruv" />
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
@@ -47,8 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="24dp"
-            app:cardBackgroundColor="#1E293B"
-            app:strokeWidth="0dp">
+            app:cardBackgroundColor="@color/bg_card"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/border_input">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="BU OYLIK JAMI DAROMAD"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:letterSpacing="0.05"/>
@@ -73,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:text="+15%"
-                        android:textColor="#10B981"
+                        android:textColor="@color/income_green"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:background="@drawable/status_bg_green"
@@ -88,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+18 450 000 so'm"
-                    android:textColor="#10B981"
+                    android:textColor="@color/income_green"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     android:layout_marginTop="12dp"/>
@@ -97,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="O'tgan oyga nisbatan barqaror o'sish qayd etildi"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/text_secondary"
                     android:textSize="12sp"
                     android:layout_marginTop="8dp"/>
 
@@ -113,20 +115,20 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:padding="12dp"
-                        android:background="@drawable/bg_input_dark"
+                        android:background="@drawable/bg_input_field"
                         android:layout_marginEnd="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tranzaksiyalar"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
                         <TextView
                             android:id="@+id/tvSummaryIncCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5 ta kirim"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_primary"
                             android:textStyle="bold"
                             android:layout_marginTop="4dp"
                             android:textSize="14sp"/>
@@ -138,20 +140,20 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:padding="12dp"
-                        android:background="@drawable/bg_input_dark"
+                        android:background="@drawable/bg_input_field"
                         android:layout_marginStart="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Eng katta manba"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
                         <TextView
                             android:id="@+id/tvTopSource"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="avans"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_primary"
                             android:textStyle="bold"
                             android:layout_marginTop="4dp"
                             android:textSize="14sp"/>
@@ -178,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Yangi daromad qo'shish"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
@@ -187,7 +189,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:text="MODUL 02"
-                    android:textColor="#475569"
+                    android:textColor="@color/text_secondary"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -196,7 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DAROMAD MANBASI"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"/>
@@ -205,9 +207,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:hint="Masalan: Oylik maosh yoki Frilans"
-                android:textColor="@color/white"
-                android:textColorHint="#475569"
-                android:background="@drawable/bg_input_dark"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:background="@drawable/bg_input_field"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -217,7 +219,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SUMMA (SO'M)"
-                android:textColor="#94A3B8"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"/>
@@ -227,9 +229,9 @@
                 android:layout_height="56dp"
                 android:hint="Summani kiriting"
                 android:inputType="numberDecimal"
-                android:textColor="@color/white"
-                android:textColorHint="#475569"
-                android:background="@drawable/bg_input_dark"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:background="@drawable/bg_input_field"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -249,7 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="SANA"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="10dp"/>
@@ -257,7 +259,7 @@
                         android:id="@+id/rlDateContainer"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:background="@drawable/bg_input_dark"
+                        android:background="@drawable/bg_input_field"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
                         <EditText
@@ -268,8 +270,8 @@
                             android:hint="2026-10-26"
                             android:focusable="false"
                             android:clickable="false"
-                            android:textColor="@color/white"
-                            android:textColorHint="#475569"
+                            android:textColor="@color/text_primary"
+                            android:textColorHint="@color/text_secondary"
                             android:textSize="16sp"/>
                         <ImageView
                             android:id="@+id/ivCalendarIcon"
@@ -278,7 +280,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_calendar"
-                            app:tint="@color/black"/>
+                            app:tint="@color/text_secondary"/>
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -292,7 +294,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="HISOB TURI"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="10dp"/>
@@ -301,9 +303,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:hint="Karta (Uzcard.."
-                        android:textColor="@color/white"
-                        android:textColorHint="#475569"
-                        android:background="@drawable/bg_input_dark"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:background="@drawable/bg_input_field"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:textSize="16sp"
@@ -317,7 +319,7 @@
                 android:layout_height="64dp"
                 android:text="DAROMADNI SAQLASH"
                 android:layout_marginTop="32dp"
-                android:backgroundTint="#3B82F6"
+                android:backgroundTint="@color/primary"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -340,7 +342,7 @@
                 android:text="Daromadlar ro'yxati"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/white"/>
+                android:textColor="@color/text_primary"/>
 
             <TextView
                 android:id="@+id/tvIncomeCount"
@@ -349,8 +351,8 @@
                 android:text="5 TA KIRIM"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:textColor="#3B82F6"
-                android:background="@drawable/bg_input_dark"
+                android:textColor="@color/primary"
+                android:background="@drawable/bg_input_field"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="6dp"
