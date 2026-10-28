@@ -49,6 +49,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:elevation="20dp"
+        android:background="@color/bg_app"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintLeft_toLeftOf="parent"

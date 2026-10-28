@@ -82,18 +82,36 @@ public class DailyExpensesFragment extends Fragment {
         EditText etSearch = view.findViewById(R.id.etSearchDaily);
         ImageButton btnSearch = view.findViewById(R.id.btnSearchDaily);
 
-        if (dayName != null) {
-            tvTitle.setText(dayName + " xarajatlari");
+        long itemTs = (expenses != null && !expenses.isEmpty()) 
+                ? expenses.get(0).timestamp 
+                : System.currentTimeMillis();
+        
+        SimpleDateFormat sdfDate = new SimpleDateFormat("d MMMM yyyy", new Locale("uz"));
+        Calendar today = Calendar.getInstance();
+        Calendar itemCal = Calendar.getInstance();
+        itemCal.setTimeInMillis(itemTs);
+        
+        boolean isToday = today.get(Calendar.YEAR) == itemCal.get(Calendar.YEAR) &&
+                          today.get(Calendar.DAY_OF_YEAR) == itemCal.get(Calendar.DAY_OF_YEAR);
+        
+        String formattedDate = sdfDate.format(new Date(itemTs));
+        
+        // Handle title based on dayName
+        boolean isDateString = false;
+        try {
+            if (dayName != null) {
+                new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(dayName);
+                isDateString = true;
+            }
+        } catch (Exception ignored) {}
+
+        if (isDateString) {
+            tvTitle.setText(formattedDate);
+            tvDateLong.setText(isToday ? "Bugun" : "Tanlangan sana");
         } else {
-            tvTitle.setText("Xarajatlar");
+            tvTitle.setText(dayName != null ? dayName + " xarajatlari" : "Xarajatlar");
+            tvDateLong.setText(isToday ? "Bugun, " + formattedDate : formattedDate);
         }
-        
-        SimpleDateFormat sdfDate = new SimpleDateFormat("d MMM yyyy", new Locale("uz"));
-        String dateStr = expenses != null && !expenses.isEmpty() 
-                ? sdfDate.format(expenses.get(0).timestamp) 
-                : new SimpleDateFormat("d MMM yyyy", new Locale("uz")).format(System.currentTimeMillis());
-        
-        tvDateLong.setText("Bugun, " + dateStr);
         updateTotal();
 
         btnBack.setOnClickListener(v -> {

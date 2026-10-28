@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Byudjet</string>
+    <string name="xarajatlar">Xarajatlar</string>
+    <string name="oylik_xarajatlar">Oylik xarajatlar</string>
+    <string name="har_bir_kunning_xarajati">Har bir kunning xarajati, so\'mda.</string>
+    <string name="jami_xarajatlar">Jami xarajatlar</string>
+    <string name="otganga_nisbatan"> o\'tganga nisbatan</string>
+    <string name="toifalar">Toifalar</string>
+    <string name="barchasi">Barchasi</string>
+    <string name="bugungi_xarajat">Bugungi xarajat</string>
+    <string name="kunlik_xarajat">Kunlik xarajat</string>
+    <string name="percent_format">%d%%</string>
 </resources>
