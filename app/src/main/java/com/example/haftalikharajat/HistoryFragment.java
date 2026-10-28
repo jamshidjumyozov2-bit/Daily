@@ -42,6 +42,7 @@ public class HistoryFragment extends Fragment {
             public Fragment createFragment(int position) {
                 if (position == 1) return new WeeklyFragment();
                 if (position == 2) return new MonthlyFragment();
+                if (position == 3) return new YearlyFragment();
                 return PeriodFragment.newInstance(position);
             }
 
@@ -124,8 +125,12 @@ public class HistoryFragment extends Fragment {
         Fragment f = getChildFragmentManager().findFragmentByTag("f" + pos);
         if (f instanceof PeriodFragment) {
             ((PeriodFragment) f).setFilterDate(filter);
+        } else if (f instanceof YearlyFragment && pos == 3) {
+            try {
+                int year = Integer.parseInt(filter);
+                ((YearlyFragment) f).setYear(year);
+            } catch (NumberFormatException ignored) {}
         }
-        // Weekly and Monthly are usually updated via their own set methods or they react to internal state
     }
 
     private void showYearPicker() {
@@ -213,6 +218,8 @@ public class HistoryFragment extends Fragment {
                     ((WeeklyFragment) f).updateData();
                 } else if (f instanceof MonthlyFragment) {
                     ((MonthlyFragment) f).updateData();
+                } else if (f instanceof YearlyFragment) {
+                    ((YearlyFragment) f).updateData();
                 }
             }
         }

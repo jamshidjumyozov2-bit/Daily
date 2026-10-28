@@ -1,186 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1221"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:background="#0B1221">
 
-    <LinearLayout
+    <!-- Header for Detail View (Faqat Yillikdan kirganda ko'rinadi) -->
+    <RelativeLayout
+        android:id="@+id/layoutMonthlyHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone">
 
-        <!-- Top Bar removed, moved to parent HistoryFragment -->
+        <ImageButton
+            android:id="@+id/btnMonthlyBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_back"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/white"
+            android:layout_centerVertical="true"/>
 
-        <!-- Main Calendar Card -->
-        <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:id="@+id/tvMonthlyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oylik hisobot"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/btnMonthlyBack"
+            android:layout_marginStart="12dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="#0F172A"
-            app:strokeWidth="1dp"
-            app:strokeColor="#1E293B">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <LinearLayout
+            <!-- Main Calendar Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Weekday labels -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Du" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Se" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Ch" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Pa" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Ju" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Sh" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Ya" android:textColor="#EF4444" android:textSize="10sp" android:gravity="center" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCalendar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Summary Statistics Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardSummaryStats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="#0F172A"
-            app:strokeWidth="1dp"
-            app:strokeColor="#1E293B">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardSummaryIcon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    app:cardCornerRadius="14dp"
-                    app:cardBackgroundColor="#2563EB">
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_shopping"
-                        app:tint="@color/white" />
-                </com.google.android.material.card.MaterialCardView>
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#0F172A"
+                app:strokeWidth="1dp"
+                app:strokeColor="#1E293B">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_toEndOf="@id/cardSummaryIcon"
-                    android:layout_marginStart="12dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:padding="16dp">
+
+                    <!-- Weekday labels -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/jami_xarajatlar"
-                        android:textColor="@color/dark_text_secondary"
-                        android:textSize="11sp" />
-                    <TextView
-                        android:id="@+id/tvMonthlyTotalAmount"
-                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Du" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Se" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Ch" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Pa" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Ju" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Sh" android:textColor="@color/dark_text_secondary" android:textSize="10sp" android:gravity="center" />
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Ya" android:textColor="#EF4444" android:textSize="10sp" android:gravity="center" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCalendar"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="1 450 000 so'm"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Summary Statistics Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSummaryStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#0F172A"
+                app:strokeWidth="1dp"
+                app:strokeColor="#1E293B">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardSummaryIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:cardCornerRadius="14dp"
+                        app:cardBackgroundColor="#2563EB">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_shopping"
+                            app:tint="@color/white" />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="4dp"
-                        android:background="@drawable/badge_bg"
-                        android:paddingHorizontal="6dp"
-                        android:paddingVertical="2dp">
+                        android:orientation="vertical"
+                        android:layout_toEndOf="@id/cardSummaryIcon"
+                        android:layout_marginStart="12dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+12%"
-                            android:textColor="#10B981"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/otganga_nisbatan"
+                            android:text="@string/jami_xarajatlar"
                             android:textColor="@color/dark_text_secondary"
-                            android:textSize="10sp"
-                            android:layout_marginStart="4dp"/>
+                            android:textSize="11sp" />
+                        <TextView
+                            android:id="@+id/tvMonthlyTotalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 so'm"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/badge_bg"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="+0%"
+                                android:textColor="#10B981"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/otganga_nisbatan"
+                                android:textColor="@color/dark_text_secondary"
+                                android:textSize="10sp"
+                                android:layout_marginStart="4dp"/>
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-                <com.example.haftalikharajat.LineChartView
-                    android:id="@+id/miniChart"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
+                    <com.example.haftalikharajat.LineChartView
+                        android:id="@+id/miniChart"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_more"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    app:tint="@color/dark_text_secondary"/>
-
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Category Grid Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="12dp">
-            <TextView
-                android:layout_width="0dp"
+            <!-- Category Grid Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/toifalar"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/toifalar"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategoryGrid"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/barchasi"
-                android:textColor="@color/dark_text_secondary"
-                android:textSize="12sp"
-                app:drawableEndCompat="@drawable/ic_more"
-                app:drawableTint="@color/dark_text_secondary"
-                android:drawablePadding="4dp"/>
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="24dp"/>
+
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategoryGrid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginBottom="24dp"/>
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

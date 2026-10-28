@@ -4,17 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,8 +31,19 @@ import java.util.Map;
 
 public class MonthlyFragment extends Fragment {
 
+    public static MonthlyFragment newInstance(int month, int year) {
+        MonthlyFragment fragment = new MonthlyFragment();
+        Bundle args = new Bundle();
+        args.putInt("arg_month", month);
+        args.putInt("arg_year", year);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     private RecyclerView rvCalendar, rvCategoryGrid;
-    private TextView tvMonthlyTotalAmount;
+    private TextView tvMonthlyTotalAmount, tvMonthlyTitle;
+    private View layoutMonthlyHeader;
+    private ImageButton btnMonthlyBack;
     private LineChartView miniChart;
     
     private Calendar currentCalendar = Calendar.getInstance();
@@ -46,7 +61,18 @@ public class MonthlyFragment extends Fragment {
         rvCalendar = view.findViewById(R.id.rvCalendar);
         rvCategoryGrid = view.findViewById(R.id.rvCategoryGrid);
         tvMonthlyTotalAmount = view.findViewById(R.id.tvMonthlyTotalAmount);
+        tvMonthlyTitle = view.findViewById(R.id.tvMonthlyTitle);
+        layoutMonthlyHeader = view.findViewById(R.id.layoutMonthlyHeader);
+        btnMonthlyBack = view.findViewById(R.id.btnMonthlyBack);
         miniChart = view.findViewById(R.id.miniChart);
+        
+        if (btnMonthlyBack != null) {
+            btnMonthlyBack.setOnClickListener(v -> {
+                if (getParentFragmentManager() != null) {
+                    getParentFragmentManager().popBackStack();
+                }
+            });
+        }
         
         if (miniChart != null) {
             miniChart.setMiniMode(true);
@@ -60,6 +86,11 @@ public class MonthlyFragment extends Fragment {
         categoryAdapter = new CategorySummaryAdapter(categorySummaries, this::onCategorySelected);
         rvCategoryGrid.setAdapter(categoryAdapter);
 
+        if (getArguments() != null) {
+            currentCalendar.set(Calendar.MONTH, getArguments().getInt("arg_month"));
+            currentCalendar.set(Calendar.YEAR, getArguments().getInt("arg_year"));
+        }
+
         updateUI();
 
         return view;
@@ -72,6 +103,13 @@ public class MonthlyFragment extends Fragment {
     }
 
     private void updateUI() {
+        if (getArguments() != null && layoutMonthlyHeader != null) {
+            layoutMonthlyHeader.setVisibility(View.VISIBLE);
+            String monthName = new SimpleDateFormat("MMMM yyyy", new Locale("uz")).format(currentCalendar.getTime());
+            if (tvMonthlyTitle != null) {
+                tvMonthlyTitle.setText(monthName.substring(0, 1).toUpperCase() + monthName.substring(1));
+            }
+        }
         generateCalendar();
         updateGeneralStats();
     }
