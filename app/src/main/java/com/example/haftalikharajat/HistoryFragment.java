@@ -129,20 +129,36 @@ public class HistoryFragment extends Fragment {
     }
 
     private void showYearPicker() {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
-        final android.widget.NumberPicker yearPicker = new android.widget.NumberPicker(getContext());
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext(), R.style.CustomPickerDialogTheme);
+        android.view.View dialogView = getLayoutInflater().inflate(R.layout.dialog_month_year_picker, null);
+        builder.setView(dialogView);
+        android.app.AlertDialog dialog = builder.create();
+
+        final android.widget.NumberPicker monthPicker = dialogView.findViewById(R.id.picker_month);
+        final android.widget.NumberPicker yearPicker = dialogView.findViewById(R.id.picker_year);
+        android.widget.TextView tvTitle = dialogView.findViewById(R.id.tv_dialog_title);
+
+        if (tvTitle != null) {
+            tvTitle.setText("Yilni tanlang");
+        }
+
+        // Hide month picker since we only need year
+        monthPicker.setVisibility(android.view.View.GONE);
+
         yearPicker.setMinValue(2020);
         yearPicker.setMaxValue(2030);
         yearPicker.setValue(Calendar.getInstance().get(Calendar.YEAR));
-        builder.setView(yearPicker);
-        builder.setTitle("Yilni tanlang");
-        builder.setPositiveButton("OK", (dialog, id) -> {
+
+        dialogView.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             String yearStr = String.valueOf(yearPicker.getValue());
             etSearchDate.setText(yearStr);
             applyFilter(yearStr);
+            dialog.dismiss();
         });
-        builder.setNegativeButton("Bekor qilish", (dialog, id) -> dialog.cancel());
-        builder.create().show();
+
+        dialogView.findViewById(R.id.btn_cancel).setOnClickListener(v -> dialog.dismiss());
+        
+        dialog.show();
     }
 
     private void showMonthYearPicker() {
@@ -151,13 +167,18 @@ public class HistoryFragment extends Fragment {
         
         MonthlyFragment monthlyFragment = (MonthlyFragment) currentFragment;
         
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_month_year_picker, null);
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext(), R.style.CustomPickerDialogTheme);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_month_year_picker, null);
         builder.setView(dialogView);
+        android.app.AlertDialog dialog = builder.create();
 
         final android.widget.NumberPicker monthPicker = dialogView.findViewById(R.id.picker_month);
         final android.widget.NumberPicker yearPicker = dialogView.findViewById(R.id.picker_year);
+        android.widget.TextView tvTitle = dialogView.findViewById(R.id.tv_dialog_title);
+
+        if (tvTitle != null) {
+            tvTitle.setText("Oyni tanlang");
+        }
 
         monthPicker.setMinValue(0);
         monthPicker.setMaxValue(11);
@@ -170,13 +191,16 @@ public class HistoryFragment extends Fragment {
         yearPicker.setMaxValue(2030);
         yearPicker.setValue(cal.get(Calendar.YEAR));
 
-        builder.setPositiveButton("OK", (dialog, id) -> {
+        dialogView.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             monthlyFragment.setMonthYear(monthPicker.getValue(), yearPicker.getValue());
             String dateText = monthPicker.getDisplayedValues()[monthPicker.getValue()] + " " + yearPicker.getValue();
             etSearchDate.setText(dateText);
+            dialog.dismiss();
         });
-        builder.setNegativeButton("Bekor qilish", (dialog, id) -> dialog.cancel());
-        builder.create().show();
+
+        dialogView.findViewById(R.id.btn_cancel).setOnClickListener(v -> dialog.dismiss());
+        
+        dialog.show();
     }
 
     public void refresh() {
